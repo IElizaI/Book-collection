@@ -1,0 +1,22 @@
+{
+  "name": "digital-library",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IElizaI/digital-library.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IElizaI/digital-library/issues"
+  },
+  "homepage": "https://github.com/IElizaI/digital-library#readme"
+}
