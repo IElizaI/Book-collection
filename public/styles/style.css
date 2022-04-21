@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@400;600&family=Lato:wght@400;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+main {
+  max-width: 1800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-search-form {
+  margin: 70px;
+}
+
+.container-search-form input {
+  width: 600px;
+  height: 40px;
+  margin: 20px;
+  font-size: 1rem;
+  padding: 5px;
+}
+
+.container-search-form form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container-search-form .btn {
+  width: 100px;
+  height: 40px;
+  outline: none;
+  border: 1px solid black;
+  font-weight: 700;
+  background-color: #fff;
+  cursor: pointer;
+  transition: .5;
+}
+
+.container-search-form .btn:hover {
+  border: 2px solid black;
+  background-color: rgb(215, 255, 211);
+  font-size: 1.1rem;
+}
+
+.cards {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card {
+  word-wrap: break-word;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+  width: 25%;
+}
+
+.card .title {
+  line-height: 1.7;
+  font-weight: 700;
+  font-size: 1.2rem;
+  font-family: 'Inknut Antiqua', serif;
+  text-align: center;
+}
+
+.card .description {
+  width: 100%;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.card .cover {
+  margin: 25px;
+}
+
+.card .details {
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: rgb(63, 63, 63);
+  margin-top: 20px;
+}
