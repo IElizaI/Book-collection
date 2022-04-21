@@ -37,7 +37,7 @@ const handleSearch = async (event) => {
     const containerCard = document.createElement('div');
     containerCard.className = 'card';
 
-    // console.log(resultBook.covers);
+    console.log(resultBook);
     const { covers } = resultBook;
     const cover = covers && covers.length ? coverTemplate(covers.pop()) : defaultCover;
 
@@ -63,12 +63,15 @@ const handleSearch = async (event) => {
     //     <a data-key="${book.key}" class="details" href="/book/details"><div>Details</div></a>
     //   `;
     // } else {
+    const key = book.key.slice(7);
+    console.log(key);
     containerCard.innerHTML = `
       <img class="cover" src="${cover}">
       <div class="title">${resultBook.title}</div>
       <p class="description">${description}</p>
-      <a data-key="${book.key}" class="details" href="/book/details"><div>Details</div></a>
+      <a data-key="${book.key}" class="details" href="/books/${key}/details"><div>Details</div></a>
     `;
+    console.log('book.key', book.key);
     // }
     containerCards.appendChild(containerCard);
     // } else {

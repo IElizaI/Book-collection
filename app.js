@@ -2,6 +2,7 @@ require('dotenv').config();
 const path = require('path');
 const bcrypt = require('bcrypt');
 const express = require('express');
+const passport = require('passport');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
@@ -19,10 +20,11 @@ const sessionConfig = {
   secret: 'keyboard cat',
   cookie: {
     maxAge: 365 * 24 * 60 * 60 * 1000,
-    httpOnly: false,
+    path: '/',
+    httpOnly: true,
   },
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
 };
 
 app.locals.title = 'Book collection';
@@ -34,7 +36,7 @@ hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 app.use(cookieParser());
 app.use(expressSession(sessionConfig));
 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -48,7 +50,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/book/details', bookRouter);
+app.use('/books', bookRouter);
 
 app.get('*', (req, res) => {
   res.redirect('/');
