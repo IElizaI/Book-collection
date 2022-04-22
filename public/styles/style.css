@@ -99,6 +99,11 @@ main {
 }
 
 .book {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-book {
   max-width: 1800px;
   margin: 0 auto;
   display: flex;

@@ -1,23 +1,24 @@
 <div class="book">
-  <div class="container-book">
-    <h2>{{book.title}}</h2>
-    <img src="{{cover}}" alt="cover">
-    {{#if link}}
-    <a target="_blank" href="{{link}}">
-      <p>link to wikipedia</p>
-    </a>
-    {{/if}}
-    <p class="description">{{description}}</p>
-  </div>
-  <div class="container-book-info">
-    <div class="places">
-      {{#if subPlaces}}
-      <h3>Subject places</h3>
-      <p>
-      {{#each subPlaces}}
+  <div class="details-book">
+    <div class="container-book">
+      <h2>{{book.title}}</h2>
+      <img src="{{cover}}" alt="cover">
+      {{#if link}}
+      <a target="_blank" href="{{link}}">
+        <p>link to wikipedia</p>
+      </a>
+      {{/if}}
+      <p class="description">{{description}}</p>
+    </div>
+    <div class="container-book-info">
+      <div class="places">
+        {{#if subPlaces}}
+        <h3>Subject places</h3>
+        <p>
+        {{#each subPlaces}}
         {{this}}
-      {{/each}}
-      </p>
+        {{/each}}
+        </p>
       {{/if}}
     </div>
     <div class="people">
@@ -25,7 +26,7 @@
       <h3>Subject people</h3>
        <p>
       {{#each subPeople}}
-        {{this}}
+      {{this}}
       {{/each}}
       </p>
       {{/if}}
@@ -40,3 +41,5 @@
     </div>
   </div>
 </din>
+</div>
+{{>comments}}

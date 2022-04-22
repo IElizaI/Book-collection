@@ -14,7 +14,7 @@ const handleSearch = async (event) => {
   containerCards.innerHTML = '';
   console.log('Hi');
 
-  let formRequest = document.getElementById('search').value.toLowerCase();
+  let formRequest = document.getElementById('js-search').value.toLowerCase();
   formRequest = formRequest.split(' ').join('+');
   console.log('formRequest', formRequest);
 
@@ -84,18 +84,39 @@ const handleSearch = async (event) => {
     //   containerCards.appendChild(containerCard);
     // }
   });
-  document.getElementById('search').value = '';
+  document.getElementById('js-search').value = '';
 };
 
-const handleDetails = async (event) => {
+const handleLogin = async (event) => {
   event.preventDefault();
-  console.log('детали');
+  console.log('логин');
+
+  const email = document.getElementById('js-email').value;
+  const password = document.getElementById('js-password').value;
+
+  console.log(email, password);
+
+  const response = await fetch('/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email, password,
+    }),
+  });
+
+  const result = await response.json;
+
+  const alert = getElementById('js-alert');
+
+  if (result.success) {
+
+  }
 };
 
-document.getElementById('btn-search')
+document.getElementById('js-btn-search')
   ?.addEventListener('click', handleSearch);
 
-document.querySelectorAll('.details')
-  .forEach((card) => {
-    card?.addEventListener('click', handleDetails);
-  });
+document.getElementById('js-auth-btn')
+  ?.addEventListener('click', handleLogin);

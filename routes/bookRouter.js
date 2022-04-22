@@ -1,10 +1,16 @@
+const authCheck = require('../middleware/jwt');
+
 const router = require('express').Router();
+require('../config-passport');
 
 // eslint-disable-next-line no-shadow
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const coverTemplate = (cover) => `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
 const defaultCover = 'https://via.placeholder.com/250x200';
 
+router.use('/:key/details', authCheck((req, res) => {
+  res.render('forbidden');
+}));
 router.get('/:key/details', async (req, res) => {
   const { key } = req.params;
 
