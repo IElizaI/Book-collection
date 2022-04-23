@@ -14,7 +14,6 @@ const authCheck = (callback) => (req, res, next) => {
     callback(req, res, next);
     return;
   }
-  req.user = userData;
 
   next();
 };

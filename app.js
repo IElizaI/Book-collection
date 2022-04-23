@@ -1,14 +1,13 @@
 require('dotenv').config();
 const path = require('path');
-// const bcrypt = require('bcrypt');
 const express = require('express');
+const http = require('http');
+const { Server } = require('socket.io');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const expressSession = require('express-session');
 const FileStore = require('session-file-store')(expressSession);
 const hbs = require('hbs');
-const userData = require('./middleware/getAuthorization');
-
 // const passport = require('passport');
 // const LocalStrategy = require('passport-local').Strategy;
 // const { User } = require('./db/models');
@@ -17,8 +16,13 @@ const { sequelize } = require('./db/models');
 const indexRouter = require('./routes/indexRouter');
 const bookRouter = require('./routes/bookRouter');
 const loginRouter = require('./routes/loginRouter');
+const registerRouter = require('./routes/registerRouter');
+const logoutRouter = require('./routes/logoutRouter');
+const decodeUserData = require('./middleware/decodeUserData');
 
 const app = express();
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
 const PORT = process.env.PORT ?? 3000;
 
 const SECRET = 'keyboard cat';
@@ -43,7 +47,7 @@ hbs.registerPartials(path.join(__dirname, 'views', 'partials'));
 
 app.use(cookieParser());
 app.use(expressSession(sessionConfig));
-app.use(userData);
+app.use(decodeUserData);
 
 // app.use(passport.initialize());
 // app.use(passport.session());
@@ -114,12 +118,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/books', bookRouter);
 app.use('/login', loginRouter);
+app.use('/register', registerRouter);
+app.use('/logout', logoutRouter);
 
 app.get('*', (req, res) => {
   res.redirect('/');
 });
 
-app.listen(PORT, async () => {
+io.on('connection', (socket) => {
+  console.log(socket.id);
+});
+
+httpServer.listen(PORT, async () => {
   /* eslint-disable no-console */
   console.log(`The server is listening on port ${PORT}...`);
 

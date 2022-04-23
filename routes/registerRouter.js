@@ -1,31 +1,33 @@
-// const passport = require('passport');
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const JWT = require('../jwt');
 const { User } = require('../db/models');
-// require('../config-passport');
-
-// router.use(passport.initialize());
-// router.use(passport.session());
 
 router.get('/', (req, res) => {
-  res.render('login', req.getAuth());
-  // console.log(req.session);
+  res.render('register', req.getAuth());
 });
 
 router.post('/', async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { name, email, password } = req.body;
 
-  const user = await User.findOne({ raw: true, where: { email } });
+    const createdUser = await User.create({
+      name,
+      email,
+      password: await bcrypt.hash(password, 10),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    const user = await User.findOne({ raw: true, where: { id: createdUser.id } });
 
-  if (user && await bcrypt.compare(password, user.password)) {
     const { password: pass, ...otherUserData } = user;
 
     const token = JWT.sign(otherUserData);
 
     req.session.token = token;
     res.send({ success: true });
-  } else {
+  } catch (error) {
+    console.log(error);
     res.send({ success: false });
   }
 });

@@ -7,11 +7,34 @@
 const coverTemplate = (cover) => `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
 const defaultCover = 'https://via.placeholder.com/250x200';
 
+const uploader = () => {
+  const load = document.createElement('div');
+  load.className = 'sk-cube-grid';
+  load.innerHTML = `
+    <div class="sk-cube sk-cube1"></div>
+    <div class="sk-cube sk-cube2"></div>
+    <div class="sk-cube sk-cube3"></div>
+    <div class="sk-cube sk-cube4"></div>
+    <div class="sk-cube sk-cube5"></div>
+    <div class="sk-cube sk-cube6"></div>
+    <div class="sk-cube sk-cube7"></div>
+    <div class="sk-cube sk-cube8"></div>
+    <div class="sk-cube sk-cube9"></div>
+  `;
+  return load;
+};
+
 const handleSearch = async (event) => {
   event.preventDefault();
 
+  document.querySelector('.cards').innerHTML = '';
+
   const containerCards = document.querySelector('.cards');
-  containerCards.innerHTML = '';
+
+  const load = uploader();
+  console.log(load);
+  document.querySelector('.cards').prepend(load);
+
   console.log('Hi');
 
   let formRequest = document.getElementById('js-search').value.toLowerCase();
@@ -22,6 +45,8 @@ const handleSearch = async (event) => {
   const resultAllBooks = await responseAllBooks.json();
   const books = await resultAllBooks.docs;
   // console.log(await books);
+
+  load.remove();
 
   books.forEach(async (book) => {
     let resultBook = null;
@@ -89,10 +114,22 @@ const handleSearch = async (event) => {
 
 const handleLogin = async (event) => {
   event.preventDefault();
+
+  const alert = document.getElementById('js-alert');
+
+  if (alert) {
+    alert.innerText = '';
+  }
   console.log('логин');
 
   const email = document.getElementById('js-email').value;
   const password = document.getElementById('js-password').value;
+
+  if (!email || !password) {
+    alert.className = 'failed';
+    alert.innerText = 'Please fill in all fields';
+    return;
+  }
 
   console.log(email, password);
 
@@ -106,12 +143,60 @@ const handleLogin = async (event) => {
     }),
   });
 
-  const result = await response.json;
-
-  const alert = getElementById('js-alert');
+  const result = await response.json();
 
   if (result.success) {
+    alert.className = 'successfully';
+    alert.innerText = 'User successfully logged in';
+    setTimeout(() => {
+      document.location = '/';
+    }, 3000);
+  } else {
+    alert.className = 'failed';
+    alert.innerText = 'Authorisation Error. Check your input or register';
+  }
+};
 
+const handleRegister = async (event) => {
+  event.preventDefault();
+
+  const alert = document.getElementById('js-alert');
+
+  if (alert) {
+    alert.innerText = '';
+  }
+
+  const name = document.getElementById('js-name').value;
+  const email = document.getElementById('js-email').value;
+  const password = document.getElementById('js-password').value;
+
+  if (!name || !email || !password) {
+    alert.className = 'failed';
+    alert.innerText = 'Please fill in all fields';
+    return;
+  }
+
+  const response = await fetch('/register', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      name, email, password,
+    }),
+  });
+
+  const result = await response.json();
+
+  if (result.success) {
+    alert.className = 'successfully';
+    alert.innerText = 'User successfully registered';
+    setTimeout(() => {
+      document.location = '/';
+    }, 3000);
+  } else {
+    alert.className = 'failed';
+    alert.innerText = 'Error during registration. Perhaps such a user exists';
   }
 };
 
@@ -120,3 +205,6 @@ document.getElementById('js-btn-search')
 
 document.getElementById('js-auth-btn')
   ?.addEventListener('click', handleLogin);
+
+document.getElementById('js-reg-btn')
+  ?.addEventListener('click', handleRegister);

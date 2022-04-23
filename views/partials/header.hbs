@@ -1,0 +1,22 @@
+<header>
+  <div class="logo">
+    <a href="/">Book collection</a>
+  </div>
+  <nav class="nav">
+    <ul>
+      {{#if isAuthorized}}
+      <li>Hi {{name}}</li>
+      <li>
+        <a href="/logout">Log out</a>
+      </li>
+      {{else}}
+      <li>
+        <a href="/login">Log in</a>
+      </li>
+      <li>
+        <a href="/register">Register</a>
+      </li>
+      {{/if}}
+    </ul>
+  </nav>
+</header>

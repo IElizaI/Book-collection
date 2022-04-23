@@ -25,9 +25,6 @@ module.exports = {
       password: {
         allowNull: false,
         type: Sequelize.TEXT,
-        validate: {
-          notEmpty: true,
-        },
       },
       createdAt: {
         allowNull: false,

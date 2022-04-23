@@ -48,7 +48,8 @@ main {
   transition: .5;
 }
 
-.container-search-form .btn:hover {
+.container-search-form .btn:hover,
+.container-comments button:hover {
   border: 2px solid black;
   background-color: rgb(215, 255, 211);
   font-size: 1.1rem;
@@ -143,4 +144,161 @@ main {
 .container-book-info .authors p {
   line-height: 1.5;
   margin: 5px 0;
+}
+
+.successfully {
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #d6e9c6;
+  border-radius: 4px;
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+
+.failed {
+  padding: 15px;
+  margin: 10px 0;
+  border: 1px solid #e9d4c6;
+  border-radius: 4px;
+  color: #76483c;
+  background-color: #f0dcd8;
+}
+
+.container-comments {
+  max-width: 1800px;
+  margin: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container-comments form {
+  display: flex;
+  flex-direction: column;
+}
+
+.container-comments textarea {
+  width: 500px;
+  height: 200px;
+  resize: none;
+  padding: 10px;
+  border: 1px solid rgb(16, 46, 30);
+  border-radius: 3px;
+  font-size: 1rem;
+}
+
+.container-comments button {
+  width: 100px;
+  height: 40px;
+  border: 1px solid rgb(16, 46, 30);
+  border-radius: 3px;
+  margin-top: 10px;
+  font-size: 1rem;
+  transition: .5;
+  cursor: pointer;
+}
+
+header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 80px;
+  background-color: rgb(245, 255, 240);
+}
+
+header .logo {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+header .logo a {
+  text-decoration: none;
+  color: rgb(16, 46, 30);
+}
+
+.nav {
+  width: 600px;
+  display: flex;
+  justify-content: center;
+}
+
+.nav ul {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  list-style-type: none;
+  font-size: 1.2rem;
+  font-weight: 800;
+  cursor: pointer;
+  color: rgb(16, 46, 30);
+}
+
+.nav ul a {
+  text-decoration: none;
+  color: rgb(16, 46, 30);
+}
+
+
+/* uploader */
+
+.sk-cube-grid {
+  width: 40px;
+  height: 40px;
+  margin: 100px auto;
+}
+
+.sk-cube-grid .sk-cube {
+  width: 33%;
+  height: 33%;
+  background-color: rgb(215, 255, 211);
+  float: left;
+  -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
+          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+}
+.sk-cube-grid .sk-cube1 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube2 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube3 {
+  -webkit-animation-delay: 0.4s;
+          animation-delay: 0.4s; }
+.sk-cube-grid .sk-cube4 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube5 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+.sk-cube-grid .sk-cube6 {
+  -webkit-animation-delay: 0.3s;
+          animation-delay: 0.3s; }
+.sk-cube-grid .sk-cube7 {
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s; }
+.sk-cube-grid .sk-cube8 {
+  -webkit-animation-delay: 0.1s;
+          animation-delay: 0.1s; }
+.sk-cube-grid .sk-cube9 {
+  -webkit-animation-delay: 0.2s;
+          animation-delay: 0.2s; }
+
+@-webkit-keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1); 
+  }
+}
+
+@keyframes sk-cubeGridScaleDelay {
+  0%, 70%, 100% {
+    -webkit-transform: scale3D(1, 1, 1);
+            transform: scale3D(1, 1, 1);
+  } 35% {
+    -webkit-transform: scale3D(0, 0, 1);
+            transform: scale3D(0, 0, 1);
+  } 
 }

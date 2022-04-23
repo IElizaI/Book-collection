@@ -1,6 +1,5 @@
-const authCheck = require('../middleware/jwt');
-
 const router = require('express').Router();
+const authCheck = require('../middleware/jwt');
 require('../config-passport');
 
 // eslint-disable-next-line no-shadow
@@ -46,7 +45,7 @@ router.get('/:key/details', async (req, res) => {
   }));
 
   res.render('book', {
-    book, description, cover, link, subPlaces, subPeople, authors,
+    book, description, cover, link, subPlaces, subPeople, authors, ...req.getAuth(),
   });
 });
 

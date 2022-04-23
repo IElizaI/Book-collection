@@ -14,6 +14,16 @@ class JWT {
   static sign(data) {
     return jwt.sign(data, SECRET, { expiresIn: '30 days' });
   }
+
+  static decode(token) {
+    console.log(token);
+    try {
+      return jwt.decode(token);
+    } catch (e) {
+      console.log(e);
+      return null;
+    }
+  }
 }
 
 module.exports = JWT;

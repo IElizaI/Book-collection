@@ -39,9 +39,6 @@ module.exports = (sequelize, DataTypes) => {
       password: {
         allowNull: false,
         type: DataTypes.TEXT,
-        validate: {
-          notEmpty: true,
-        },
       },
       createdAt: {
         allowNull: false,
