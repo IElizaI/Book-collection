@@ -4,7 +4,6 @@ const decodeUserData = (req, res, next) => {
   const { token } = req.session;
   if (token) {
     const data = JWT.decode(token);
-    console.log('ddddd', data);
     if (data) {
       req.user = data;
     }

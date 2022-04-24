@@ -126,7 +126,11 @@ app.get('*', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  console.log(socket.id);
+  console.log('WS-соединение установлено');
+  socket.on('chat:outgoing', (message) => {
+    console.log('Client message', message);
+    socket.broadcast.emit('chat:incoming', message);
+  });
 });
 
 httpServer.listen(PORT, async () => {

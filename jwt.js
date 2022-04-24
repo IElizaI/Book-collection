@@ -16,11 +16,9 @@ class JWT {
   }
 
   static decode(token) {
-    console.log(token);
     try {
       return jwt.decode(token);
     } catch (e) {
-      console.log(e);
       return null;
     }
   }

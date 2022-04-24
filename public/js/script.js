@@ -4,9 +4,50 @@
 //   return `https://covers.openlibrary.org/b/id/${array.covers[randomNumber - 1]}-M.jpg`;
 // };
 
-const coverTemplate = (cover) => `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
+const socket = io();
+
 const defaultCover = 'https://via.placeholder.com/250x200';
 
+const coverTemplate = (cover) => `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
+
+// комментарии к книге
+const messageCard = ({ text, timestamp }) => `
+    <div class="comment">
+      <p class="time">${timestamp}</p>
+      <p class="text">${text}</p>
+    </div>
+  `;
+
+const addComment = (message) => {
+  document.querySelector('.user-comments').innerHTML += messageCard(message);
+};
+
+const sendMessage = (event) => {
+  event.preventDefault();
+
+  const text = document.getElementById('input-comment').value;
+  const timestamp = new Date().toLocaleString('ru-RU');
+
+  const message = {
+    text,
+    timestamp,
+  };
+
+  socket.emit('chat:outgoing', message);
+
+  addComment(message);
+  document.getElementById('input-comment').value = '';
+};
+
+socket.on('connect', () => {
+  console.log('WS-соединение установлено', socket.id);
+});
+
+socket.on('chat:incoming', (message) => {
+  addComment(message);
+});
+
+// эффект загрузки
 const uploader = () => {
   const load = document.createElement('div');
   load.className = 'sk-cube-grid';
@@ -208,3 +249,6 @@ document.getElementById('js-auth-btn')
 
 document.getElementById('js-reg-btn')
   ?.addEventListener('click', handleRegister);
+
+document.getElementById('comment-btn')
+  ?.addEventListener('click', sendMessage);

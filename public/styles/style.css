@@ -198,6 +198,30 @@ main {
   cursor: pointer;
 }
 
+.user-comments {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-top: 40px;
+}
+
+.comment {
+  margin-bottom: 10px;
+  background-color: beige;
+  padding: 15px;
+  border-radius: 3px;
+}
+
+.comment .time {
+  font-weight: 600;
+}
+
+.comment .text {
+  padding: 0 0 0 15px;
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
 header {
   display: flex;
   justify-content: space-around;
