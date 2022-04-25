@@ -262,6 +262,70 @@ header .logo a {
   color: rgb(16, 46, 30);
 }
 
+.reg,
+.login {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 40px;
+}
+
+.reg-form,
+.login-form {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.reg-form label,
+.login-form label {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.reg-form input,
+.login-form input {
+  margin-top: 5px;
+  width: 300px;
+  height: 30px;
+}
+
+.reg-form button,
+.login-form button {
+  width: 100px;
+  height: 35px;
+  border: 1px solid rgb(16, 46, 30);
+  border-radius: 3px;
+  margin-top: 15px;
+  font-size: 1rem;
+  transition: .5;
+  cursor: pointer;
+}
+
+.reg-form button:hover,
+.login-form button:hover {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.access-book {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
+}
+
+.access-book div {
+  display: flex;
+}
+
+.access-book div a {
+  margin: 10px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  color: rgb(16, 46, 30);
+}
+
 
 /* uploader */
 

@@ -2,9 +2,15 @@
   <form>
     <label for="input-comment"></label>
     <textarea id="input-comment" placeholder="leave a comment..."></textarea>
-    <button id="comment-btn">send</button>
+    <button data-key="{{key}}" id="comment-btn">send</button>
   </form>
   <div class="user-comments">
-    
+    {{#each comments}}
+    <div class="comment">
+      <p class="time">{{this.createdAt}}</p>
+      <p>{{this.dataValues.User.name}}</p>
+      <p class="text">{{this.text}}</p>
+    </div>
+    {{/each}}
   </div>
 </div>

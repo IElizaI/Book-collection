@@ -11,9 +11,10 @@ const defaultCover = 'https://via.placeholder.com/250x200';
 const coverTemplate = (cover) => `https://covers.openlibrary.org/b/id/${cover}-M.jpg`;
 
 // комментарии к книге
-const messageCard = ({ text, timestamp }) => `
+const messageCard = ({ text, timestamp, user }) => `
     <div class="comment">
       <p class="time">${timestamp}</p>
+      <p>${user}</p>
       <p class="text">${text}</p>
     </div>
   `;
@@ -22,15 +23,40 @@ const addComment = (message) => {
   document.querySelector('.user-comments').innerHTML += messageCard(message);
 };
 
-const sendMessage = (event) => {
+const sendMessage = async (event) => {
   event.preventDefault();
 
   const text = document.getElementById('input-comment').value;
   const timestamp = new Date().toLocaleString('ru-RU');
+  const { key } = event.target.dataset;
+  let user;
+
+  console.log(key);
+
+  const response = await fetch(`/books/${key}/comments`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      bookId: key,
+      text,
+    }),
+  });
+
+  const result = await response.json();
+
+  if (result.success) {
+    console.log('успех');
+    user = result.user;
+  } else {
+    console.log('провал');
+  }
 
   const message = {
     text,
     timestamp,
+    user,
   };
 
   socket.emit('chat:outgoing', message);
@@ -107,28 +133,18 @@ const handleSearch = async (event) => {
     const { covers } = resultBook;
     const cover = covers && covers.length ? coverTemplate(covers.pop()) : defaultCover;
 
-    const description = resultBook.description?.value || resultBook.description || '';
+    let description = resultBook.description?.value || resultBook.description || '';
+    console.log('descriptionOld', description);
+
+    if (description) {
+      description = description.slice(0, 400);
+      console.log('descriptionNew', description);
+    }
 
     if (cover === defaultCover && description === '') {
       return;
     }
 
-    // const cover = resultBook.covers ? resultBook.covers[resultBook.covers.length - 1] : 'https://via.placeholder.com/250x200'
-    // const cover = resultBook.covers[resultBook.covers.length - 1];
-    // let description = resultBook.description?.value;
-
-    // if (resultBook.description?.value || resultBook.description) {
-    //   if (!description) {
-    //     description = resultBook.description;
-    //   }
-    // if (!cover) {
-    //   containerCard.innerHTML = `
-    //     <img class="cover" src="https://via.placeholder.com/250x200">
-    //     <div class="title">${resultBook.title}</div>
-    //     <p class="description">${description}</p>
-    //     <a data-key="${book.key}" class="details" href="/book/details"><div>Details</div></a>
-    //   `;
-    // } else {
     const key = book.key.slice(7);
     console.log(key);
     containerCard.innerHTML = `
@@ -138,17 +154,8 @@ const handleSearch = async (event) => {
       <a data-key="${book.key}" class="details" href="/books/${key}/details"><div>Details</div></a>
     `;
     console.log('book.key', book.key);
-    // }
+
     containerCards.appendChild(containerCard);
-    // } else {
-    //   containerCard.innerHTML = `
-    //     <img class="cover" src="https://covers.openlibrary.org/b/id/${cover}-M.jpg">
-    //     <div class="title">${resultBook.title}</div>
-    //     <p class="description"></p>
-    //     <a class="details" href="/book/details/${book.key}"><div>Details</div></a>
-    //     `;
-    //   containerCards.appendChild(containerCard);
-    // }
   });
   document.getElementById('js-search').value = '';
 };
