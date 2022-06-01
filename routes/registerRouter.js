@@ -27,7 +27,6 @@ router.post('/', async (req, res) => {
     req.session.token = token;
     res.send({ success: true });
   } catch (error) {
-    console.log(error);
     res.send({ success: false });
   }
 });

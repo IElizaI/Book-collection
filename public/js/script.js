@@ -1,9 +1,3 @@
-// const randomCover = (array) => {
-//   const maxNumber = array.length;
-//   const randomNumber = Math.floor(Math.random() * maxNumber);
-//   return `https://covers.openlibrary.org/b/id/${array.covers[randomNumber - 1]}-M.jpg`;
-// };
-
 const socket = io();
 
 const defaultCover = 'https://via.placeholder.com/250x200';
@@ -31,8 +25,6 @@ const sendMessage = async (event) => {
   const { key } = event.target.dataset;
   let user;
 
-  console.log(key);
-
   const response = await fetch(`/books/${key}/comments`, {
     method: 'POST',
     headers: {
@@ -47,10 +39,7 @@ const sendMessage = async (event) => {
   const result = await response.json();
 
   if (result.success) {
-    console.log('успех');
     user = result.user;
-  } else {
-    console.log('провал');
   }
 
   const message = {
@@ -99,19 +88,14 @@ const handleSearch = async (event) => {
   const containerCards = document.querySelector('.cards');
 
   const load = uploader();
-  console.log(load);
   document.querySelector('.cards').prepend(load);
-
-  console.log('Hi');
 
   let formRequest = document.getElementById('js-search').value.toLowerCase();
   formRequest = formRequest.split(' ').join('+');
-  console.log('formRequest', formRequest);
 
   const responseAllBooks = await fetch(`http://openlibrary.org/search.json?q=${formRequest}`);
   const resultAllBooks = await responseAllBooks.json();
   const books = await resultAllBooks.docs;
-  // console.log(await books);
 
   load.remove();
 
@@ -124,21 +108,16 @@ const handleSearch = async (event) => {
       return;
     }
 
-    // console.log(await resultBook);
-
     const containerCard = document.createElement('div');
     containerCard.className = 'card';
 
-    console.log(resultBook);
     const { covers } = resultBook;
     const cover = covers && covers.length ? coverTemplate(covers.pop()) : defaultCover;
 
     let description = resultBook.description?.value || resultBook.description || '';
-    console.log('descriptionOld', description);
 
     if (description) {
       description = description.slice(0, 400);
-      console.log('descriptionNew', description);
     }
 
     if (cover === defaultCover && description === '') {
@@ -146,14 +125,12 @@ const handleSearch = async (event) => {
     }
 
     const key = book.key.slice(7);
-    console.log(key);
     containerCard.innerHTML = `
       <img class="cover" src="${cover}">
       <div class="title">${resultBook.title}</div>
       <p class="description">${description}</p>
       <a data-key="${book.key}" class="details" href="/books/${key}/details"><div>Details</div></a>
     `;
-    console.log('book.key', book.key);
 
     containerCards.appendChild(containerCard);
   });
@@ -168,7 +145,6 @@ const handleLogin = async (event) => {
   if (alert) {
     alert.innerText = '';
   }
-  console.log('логин');
 
   const email = document.getElementById('js-email').value;
   const password = document.getElementById('js-password').value;
@@ -179,15 +155,14 @@ const handleLogin = async (event) => {
     return;
   }
 
-  console.log(email, password);
-
   const response = await fetch('/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email, password,
+      email,
+      password,
     }),
   });
 
@@ -230,7 +205,9 @@ const handleRegister = async (event) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      name, email, password,
+      name,
+      email,
+      password,
     }),
   });
 
@@ -248,14 +225,10 @@ const handleRegister = async (event) => {
   }
 };
 
-document.getElementById('js-btn-search')
-  ?.addEventListener('click', handleSearch);
+document.getElementById('js-btn-search')?.addEventListener('click', handleSearch);
 
-document.getElementById('js-auth-btn')
-  ?.addEventListener('click', handleLogin);
+document.getElementById('js-auth-btn')?.addEventListener('click', handleLogin);
 
-document.getElementById('js-reg-btn')
-  ?.addEventListener('click', handleRegister);
+document.getElementById('js-reg-btn')?.addEventListener('click', handleRegister);
 
-document.getElementById('comment-btn')
-  ?.addEventListener('click', sendMessage);
+document.getElementById('comment-btn')?.addEventListener('click', sendMessage);
